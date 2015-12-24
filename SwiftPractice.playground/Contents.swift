@@ -183,7 +183,7 @@ class AVLTree <T: Comparable> {
             
             else {
                 
-                var newLeafNode: AVLTree = AVLTree<T>()
+                let newLeafNode: AVLTree = AVLTree<T>()
                 newLeafNode.key = key
                 self.right = newLeafNode
                 
@@ -340,6 +340,34 @@ aTree.addNode(27)
 aTree.balanceTree()
 aTree.getNodeHeight(aTree.left)
 aTree.getNodeHeight(aTree.right)
+
+//------------------------------------
+// SORTS Int
+//------------------------------------
+
+func partition(inout dataList: [Int], low: Int, high: Int) -> Int {
+    var pivotPos = low
+    let pivot = dataList[low]
+    
+    for var i = low + 1; i <= high; i++ {
+        if dataList[i] < pivot && ++pivotPos != i {
+            (dataList[pivotPos], dataList[i]) = (dataList[i], dataList[pivotPos])
+        }
+    }
+    (dataList[low], dataList[pivotPos]) = (dataList[pivotPos], dataList[low])
+    return pivotPos
+}
+
+func quickSort(inout dataList: [Int], left: Int, right: Int) {
+    if left < right {
+        let pivotPos = partition(&dataList, low: left, high: right)
+        quickSort(&dataList, left: left, right: pivotPos - 1)
+        quickSort(&dataList, left: pivotPos + 1, right: right)
+    }
+}
+
+var dataList = [42, 12, 88, 62, 63, 56, 1, 77, 88, 97, 97, 20, 45, 91, 62, 2, 15, 31, 59, 5]
+quickSort(&dataList, left: 0, right: dataList.count - 1)
 
 
 
